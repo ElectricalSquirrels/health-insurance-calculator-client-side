@@ -21,7 +21,7 @@ Sprint 4 Backlog:
 | RC-001 | As a Scrum Team, we want to identify the Sprint 4 Scrum Master and Product Owner so that I can ensure team responsibilities are clearly defined for the sprint, | 10 | 0 | Y | DONE | Salah Abdelmajid |
 | RC-002 | As a Product Owner, I want to manage the backlogs and focus on the Minimum Viable Product (MVP) and prioritize stories so that I can deliver value to users by the end of the sprint. | 8 | 2 | Y | DONE | Salah Abdelmajid |
 | RC-003 | As a Scrum Master, I want to facilitate Sprint Planning and story commitment so that I can help the team work with focus and alignment. | 8 | 2 | Y | DONE | Faiza Khan |
-| RC-004 | As a developer, I want to create a GitHub organization and repos for clients and servers so that I can collaborate using centralized version control. | 8 | 2 | Y | --DONE| Salah Abdelmajid |
+| RC-004 | As a developer, I want to create a GitHub organization and repos for clients and servers so that I can collaborate using centralized version control. | 8 | 2 | Y | DONE | Salah Abdelmajid |
 | RC-005 | As a developer, I want to set up GitHub client and server repositories along with connected Azure Static Web App and Node.js servers so that I can deploy and test code collaboratively in the cloud. | 7 | 5 | Y | DONE | Joseph Chavez |
 | RC-006 | As a user, I want a clean and welcoming home screen with instructions so that I can quickly understand how to use the application. | 7 | 3 | N | -- | Benjamin Campa |
 | RC-007 | As a user, I want to enter my age, height (in feet and inches), weight (lbs), blood pressure, and family history so that I can receive a personalized risk calculation. | 7 | 4 | N | DONE | Adrian Salinas |
