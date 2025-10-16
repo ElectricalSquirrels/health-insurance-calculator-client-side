@@ -1,4 +1,21 @@
 // client/app.js
+(async function pingServer() {
+  const pingUrl = "https://risk-calculator-api-d6dea9a7ehcxc2fw.canadacentral-01.azurewebsites.net/api/health";
+  const start = performance.now();
+  try {
+    const res = await fetch(pingUrl, { method: "GET" });
+    const end = performance.now();
+    console.log(`⏱️ Ping took ${(end - start).toFixed(2)} ms`);
+    if (res.ok) {
+      console.log("✅ Server is awake and responsive");
+    } else {
+      console.warn(`⚠️ Server responded with status: ${res.status}`);
+    }
+  } catch (err) {
+    console.error("❌ Failed to ping server:", err);
+  }
+})();
+
 document.getElementById("riskForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
