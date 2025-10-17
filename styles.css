@@ -1,0 +1,130 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", "Inter", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #e3f2fd, #e8f5e9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #333;
+}
+
+.container {
+  background-color: #ffffff;
+  padding: 3rem 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  width: 90%;
+  max-width: 550px;
+  animation: fadeIn 0.6s ease;
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.9rem;
+  margin-bottom: 1.8rem;
+  color: #1b5e20;
+  letter-spacing: 0.5px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 0.4rem;
+}
+
+input[type="number"],
+input[type="text"] {
+  padding: 0.7rem;
+  border: 1.5px solid #d0d0d0;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  background-color: #fafafa;
+}
+
+input:focus {
+  border-color: #43a047;
+  background-color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.15);
+}
+
+button {
+  background: linear-gradient(90deg, #43a047, #66bb6a);
+  color: white;
+  padding: 0.9rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #388e3c, #4caf50);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(56, 142, 60, 0.25);
+}
+
+#result {
+  margin-top: 1.8rem;
+  padding: 1.2rem;
+  border-radius: 12px;
+  background-color: #e8f5e9;
+  color: #1b5e20;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  display: none;
+  animation: fadeIn 0.5s ease;
+}
+
+small {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 0.25rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 2rem 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  button {
+    font-size: 0.9rem;
+  }
+}
