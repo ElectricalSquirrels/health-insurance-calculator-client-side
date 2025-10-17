@@ -13,42 +13,37 @@
     <form id="riskForm">
       <div class="form-group">
         <label for="age">Age:</label>
-        <input type="number" id="age" required min="1" max="120" placeholder="Enter age">
+        <input type="number" id="age" required min="1" max="120">
       </div>
 
       <div class="form-group">
         <label for="heightFt">Height (feet):</label>
-        <input type="number" id="heightFt" required min="2" max="8" placeholder="Feet">
+        <input type="number" id="heightFt" required min="2" max="8">
       </div>
 
       <div class="form-group">
         <label for="heightIn">Height (inches):</label>
-        <input type="number" id="heightIn" required min="0" max="11" placeholder="Inches">
+        <input type="number" id="heightIn" required min="0" max="11">
       </div>
 
       <div class="form-group">
         <label for="weight">Weight (lbs):</label>
-        <input type="number" id="weight" required min="50" max="700" placeholder="Enter weight">
+        <input type="number" id="weight" required min="50" max="700">
       </div>
 
       <div class="form-group">
         <label for="bpSys">Systolic Blood Pressure:</label>
-        <input type="number" id="bpSys" required min="70" max="250" placeholder="Systolic (top number)">
+        <input type="number" id="bpSys" required min="70" max="250">
       </div>
 
       <div class="form-group">
         <label for="bpDia">Diastolic Blood Pressure:</label>
-        <input type="number" id="bpDia" required min="40" max="150" placeholder="Diastolic (bottom number)">
+        <input type="number" id="bpDia" required min="40" max="150">
       </div>
 
       <div class="form-group">
         <label for="familyHistory">Family History (comma-separated):</label>
-        <input list="diseases" id="familyHistory" placeholder="Start typing...">
-        <datalist id="diseases">
-          <option value="diabetes">
-          <option value="cancer">
-          <option value="alzheimers">
-        </datalist>
+        <input type="text" id="familyHistory" placeholder="e.g., diabetes, cancer">
         <small>Options: diabetes, cancer, alzheimers</small>
       </div>
 
