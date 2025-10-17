@@ -144,15 +144,26 @@ small {
   background-color: #2e7d32;
 }
 
+#startOverBtn {
+  background-color: #81c784;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+#startOverBtn:hover {
+  background-color: #388e3c;
+}
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 480px) {

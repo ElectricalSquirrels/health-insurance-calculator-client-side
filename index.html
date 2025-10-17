@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Health Insurance Risk Calculator</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css"/>
 </head>
 <body>
   <div class="container">
@@ -13,32 +13,32 @@
     <form id="riskForm">
       <div class="form-group">
         <label for="age">Age:</label>
-        <input type="number" id="age" required min="1" max="120">
+        <input type="number" id="age" required min="1" max="120" placeholder="Enter age">
       </div>
 
       <div class="form-group">
         <label for="heightFt">Height (feet):</label>
-        <input type="number" id="heightFt" required min="2" max="8">
+        <input type="number" id="heightFt" required min="2" max="8" placeholder="Feet">
       </div>
 
       <div class="form-group">
         <label for="heightIn">Height (inches):</label>
-        <input type="number" id="heightIn" required min="0" max="11">
+        <input type="number" id="heightIn" required min="0" max="11" placeholder="Inches">
       </div>
 
       <div class="form-group">
         <label for="weight">Weight (lbs):</label>
-        <input type="number" id="weight" required min="50" max="700">
+        <input type="number" id="weight" required min="50" max="700" placeholder="Enter weight">
       </div>
 
       <div class="form-group">
         <label for="bpSys">Systolic Blood Pressure:</label>
-        <input type="number" id="bpSys" required min="70" max="250">
+        <input type="number" id="bpSys" required min="70" max="250" placeholder="Systolic (top)">
       </div>
 
       <div class="form-group">
         <label for="bpDia">Diastolic Blood Pressure:</label>
-        <input type="number" id="bpDia" required min="40" max="150">
+        <input type="number" id="bpDia" required min="40" max="150" placeholder="Diastolic (bottom)">
       </div>
 
       <div class="form-group">
@@ -50,7 +50,7 @@
       <button type="button" id="nextBtn">Next ➜ Summary</button>
     </form>
 
-    <div id="summarySection" style="display: none;">
+    <div id="summarySection" style="display:none;">
       <h3>Summary of Your Inputs:</h3>
       <ul id="summaryList"></ul>
       <button id="confirmBtn">Confirm & Calculate</button>
