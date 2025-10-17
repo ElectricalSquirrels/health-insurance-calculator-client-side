@@ -21,6 +21,24 @@ const API_BASE = window.location.hostname.includes('localhost')
   }
 })();
 
+// Function to validate all inputs before continuing
+function validateInputs() {
+  const age = Number(document.getElementById("age").value);
+  const heightFt = Number(document.getElementById("heightFt").value);
+  const heightIn = Number(document.getElementById("heightIn").value);
+  const weight = Number(document.getElementById("weight").value);
+  const bpSys = Number(document.getElementById("bpSys").value);
+  const bpDia = Number(document.getElementById("bpDia").value);
+
+  if (age < 1 || age > 120) return "⚠️ Age must be between 1 and 120.";
+  if (heightFt < 2 || heightFt > 8) return "⚠️ Height (feet) must be between 2 and 8.";
+  if (heightIn < 0 || heightIn > 11) return "⚠️ Height (inches) must be between 0 and 11.";
+  if (weight < 50 || weight > 700) return "⚠️ Weight must be between 50 and 700 lbs.";
+  if (bpSys < 70 || bpSys > 250) return "⚠️ Systolic BP must be between 70 and 250.";
+  if (bpDia < 40 || bpDia > 150) return "⚠️ Diastolic BP must be between 40 and 150.";
+  return null;
+}
+
 // Handle form submission
 document.getElementById("riskForm").addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -36,15 +54,7 @@ document.getElementById("riskForm").addEventListener("submit", async (e) => {
     ? familyHistoryInput.split(",").map(c => c.trim())
     : [];
 
-  const userData = {
-    age,
-    heightFt,
-    heightIn,
-    weight,
-    systolic,
-    diastolic,
-    familyHistory
-  };
+  const userData = { age, heightFt, heightIn, weight, systolic, diastolic, familyHistory };
 
   try {
     const response = await fetch(`${API_BASE}/api/calculate-risk`, {
@@ -81,6 +91,12 @@ const summaryList = document.getElementById("summaryList");
 const confirmBtn = document.getElementById("confirmBtn");
 
 nextBtn.addEventListener("click", () => {
+  const error = validateInputs();
+  if (error) {
+    alert(error);
+    return; // Stops from continuing if validation fails
+  }
+
   const age = document.getElementById("age").value;
   const heightFt = document.getElementById("heightFt").value;
   const heightIn = document.getElementById("heightIn").value;
@@ -88,11 +104,6 @@ nextBtn.addEventListener("click", () => {
   const bpSys = document.getElementById("bpSys").value;
   const bpDia = document.getElementById("bpDia").value;
   const familyHistory = document.getElementById("familyHistory").value;
-
-  if (!age || !heightFt || !weight || !bpSys || !bpDia) {
-    alert("⚠️ Please fill out all required fields before continuing.");
-    return;
-  }
 
   summaryList.innerHTML = `
     <li><strong>Age:</strong> ${age}</li>
