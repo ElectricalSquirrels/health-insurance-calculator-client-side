@@ -77,3 +77,42 @@ document.getElementById("riskForm").addEventListener("submit", async (e) => {
       `<p style="color:red;">Error connecting to server: ${err.message}</p>`;
   }
 });
+
+
+// Summary Section 
+const nextBtn = document.getElementById("nextBtn");
+const summarySection = document.getElementById("summarySection");
+const summaryList = document.getElementById("summaryList");
+const confirmBtn = document.getElementById("confirmBtn");
+
+nextBtn.addEventListener("click", () => {
+  const age = document.getElementById("age").value;
+  const heightFt = document.getElementById("heightFt").value;
+  const heightIn = document.getElementById("heightIn").value;
+  const weight = document.getElementById("weight").value;
+  const bpSys = document.getElementById("bpSys").value;
+  const bpDia = document.getElementById("bpDia").value;
+  const familyHistory = document.getElementById("familyHistory").value;
+
+  if (!age || !heightFt || !weight || !bpSys || !bpDia) {
+    alert("⚠️ Please fill out all required fields before continuing.");
+    return;
+  }
+
+  summaryList.innerHTML = `
+    <li><strong>Age:</strong> ${age}</li>
+    <li><strong>Height:</strong> ${heightFt} ft ${heightIn} in</li>
+    <li><strong>Weight:</strong> ${weight} lbs</li>
+    <li><strong>Blood Pressure:</strong> ${bpSys}/${bpDia}</li>
+    <li><strong>Family History:</strong> ${familyHistory || "None"}</li>
+  `;
+
+  summarySection.style.display = "block";
+  document.getElementById("riskForm").style.display = "none";
+  document.getElementById("result").style.display = "none";
+});
+
+confirmBtn.addEventListener("click", async () => {
+  document.getElementById("riskForm").requestSubmit();
+  summarySection.style.display = "none";
+});
