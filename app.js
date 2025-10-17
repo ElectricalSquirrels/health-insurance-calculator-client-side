@@ -1,6 +1,12 @@
-// client/app.js
+// Adding API base Azure url
+const API_BASE = window.location.hostname.includes('localhost')
+  ? 'http://localhost:3000'
+  : 'https://risk-calculator-api-d6dea9a7ehcxc2fw.canadacentral-01.azurewebsites.net';
+
+
+// Health ping to check if server is awake
 (async function pingServer() {
-  const pingUrl = "https://risk-calculator-api-d6dea9a7ehcxc2fw.canadacentral-01.azurewebsites.net/api/health";
+  const pingUrl = `${API_BASE}/api/health`;
   const start = performance.now();
   try {
     const res = await fetch(pingUrl, { method: "GET" });
@@ -41,11 +47,16 @@ document.getElementById("riskForm").addEventListener("submit", async (e) => {
   };
 
   try {
-    const response = await fetch("http://localhost:3000/api/calculate-risk", {
+    const response = await fetch(`${API_BASE}/api/calculate-risk`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(userData)
     });
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => '');
+      throw new Error(`HTTP ${response.status} ${response.statusText} — ${text}`);
+    }
 
     const data = await response.json();
     const resultDiv = document.getElementById("result");
