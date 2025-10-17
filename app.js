@@ -25,6 +25,13 @@ const API_BASE = window.location.hostname.includes('localhost')
 document.getElementById("riskForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
+  const error = validateInputs();
+  if (error) {
+    resultDiv.innerHTML = `<p style="color:red;">${error}</p>`;
+    resultDiv.style.display = "block";
+    return;
+  }
+
   const age = Number(document.getElementById("age").value);
   const heightFt = Number(document.getElementById("heightFt").value);
   const heightIn = Number(document.getElementById("heightIn").value);
@@ -91,6 +98,7 @@ document.getElementById("riskForm").addEventListener("submit", async (e) => {
       document.getElementById("startOverBtn").addEventListener("click", () => {
         document.getElementById("riskForm").reset();
         resultDiv.style.display = "none";
+        riskForm.style.display = "block";
         summarySection.style.display = "none";
         document.getElementById("riskForm").style.display = "block";
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -110,6 +118,12 @@ const summaryList = document.getElementById("summaryList");
 const confirmBtn = document.getElementById("confirmBtn");
 
 nextBtn.addEventListener("click", () => {
+  const error = validateInputs();
+  if (error) {
+    alert(error);
+    return;
+  }
+
   const age = document.getElementById("age").value;
   const heightFt = document.getElementById("heightFt").value;
   const heightIn = document.getElementById("heightIn").value;
