@@ -64,12 +64,22 @@ document.getElementById("riskForm").addEventListener("submit", async (e) => {
     if (data.error) {
       resultDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
     } else {
+      let insurableStatus = data.riskCategory === "uninsurable"
+        ? "❌ Uninsurable"
+        : "✅ Insurable";
+
+      let bmiColor =
+        data.bmiCategory.toLowerCase().includes("obese") ? "red" :
+        data.bmiCategory.toLowerCase().includes("overweight") ? "orange" :
+        "green";
+
       resultDiv.innerHTML = `
         <h3>Results:</h3>
-        <p><strong>BMI:</strong> ${data.bmi} (${data.bmiCategory})</p>
+        <p><strong>BMI:</strong> ${data.bmi} <span style="color:${bmiColor};">(${data.bmiCategory})</span></p>
         <p><strong>Blood Pressure:</strong> ${data.bloodPressureCategory}</p>
         <p><strong>Total Score:</strong> ${data.totalScore}</p>
         <p><strong>Risk Category:</strong> ${data.riskCategory}</p>
+        <p><strong>Status:</strong> ${insurableStatus}</p>
       `;
     }
   } catch (err) {
@@ -114,5 +124,4 @@ nextBtn.addEventListener("click", () => {
 
 confirmBtn.addEventListener("click", async () => {
   document.getElementById("riskForm").requestSubmit();
-  
 });
