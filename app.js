@@ -114,5 +114,5 @@ nextBtn.addEventListener("click", () => {
 
 confirmBtn.addEventListener("click", async () => {
   document.getElementById("riskForm").requestSubmit();
-  summarySection.style.display = "none";
+  
 });
