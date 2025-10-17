@@ -123,5 +123,7 @@ nextBtn.addEventListener("click", () => {
 });
 
 confirmBtn.addEventListener("click", async () => {
+  summarySection.style.display = "none";
+  document.getElementById("riskForm").style.display = "block";
   document.getElementById("riskForm").requestSubmit();
 });
