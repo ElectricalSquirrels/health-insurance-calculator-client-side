@@ -1,28 +1,26 @@
-// Azure API base URL
+// Base URL setup
 const API_BASE = window.location.hostname.includes('localhost')
   ? 'http://localhost:3000'
   : 'https://risk-calculator-api-d6dea9a7ehcxc2fw.canadacentral-01.azurewebsites.net';
 
-// Ping the server to wake it up
+// Health check
 (async function pingServer() {
   try {
     const res = await fetch(`${API_BASE}/api/health`);
     if (res.ok) console.log("✅ Server is awake");
   } catch {
-    console.warn("⚠️ Server unreachable");
+    console.warn("⚠️ Could not reach server yet.");
   }
 })();
 
-// Cache DOM elements
+// Cache elements
 const form = document.getElementById("riskForm");
 const summarySection = document.getElementById("summarySection");
 const summaryList = document.getElementById("summaryList");
 const resultDiv = document.getElementById("result");
-const nextBtn = document.getElementById("nextBtn");
-const confirmBtn = document.getElementById("confirmBtn");
 
-// Show summary before final calculation
-nextBtn.addEventListener("click", () => {
+// Show summary
+document.getElementById("nextBtn").addEventListener("click", () => {
   const age = document.getElementById("age").value;
   const heightFt = document.getElementById("heightFt").value;
   const heightIn = document.getElementById("heightIn").value;
@@ -31,9 +29,9 @@ nextBtn.addEventListener("click", () => {
   const bpDia = document.getElementById("bpDia").value;
   const familyHistory = document.getElementById("familyHistory").value;
 
-  // Basic validation
+  // Validation
   if (!age || !heightFt || !weight || !bpSys || !bpDia) {
-    alert("⚠️ Please fill out all required fields before continuing.");
+    alert("⚠️ Please fill out all required fields correctly before continuing.");
     return;
   }
 
@@ -45,13 +43,14 @@ nextBtn.addEventListener("click", () => {
     <li><strong>Family History:</strong> ${familyHistory || "None"}</li>
   `;
 
-  form.style.display = "none";
+  // Show summary
   summarySection.style.display = "block";
+  form.style.display = "none";
   resultDiv.style.display = "none";
 });
 
-// Confirm → calculate results
-confirmBtn.addEventListener("click", async () => {
+// Confirm & Calculate
+document.getElementById("confirmBtn").addEventListener("click", async () => {
   const age = Number(document.getElementById("age").value);
   const heightFt = Number(document.getElementById("heightFt").value);
   const heightIn = Number(document.getElementById("heightIn").value);
@@ -59,23 +58,23 @@ confirmBtn.addEventListener("click", async () => {
   const systolic = Number(document.getElementById("bpSys").value);
   const diastolic = Number(document.getElementById("bpDia").value);
   const familyHistoryInput = document.getElementById("familyHistory").value;
-  const familyHistory = familyHistoryInput
-    ? familyHistoryInput.split(",").map(c => c.trim())
-    : [];
+  const familyHistory = familyHistoryInput ? familyHistoryInput.split(",").map(c => c.trim()) : [];
 
   const userData = { age, heightFt, heightIn, weight, systolic, diastolic, familyHistory };
 
   try {
-    const response = await fetch(`${API_BASE}/api/calculate-risk`, {
+    const res = await fetch(`${API_BASE}/api/calculate-risk`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData)
+      body: JSON.stringify(userData),
     });
 
-    const data = await response.json();
+    if (!res.ok) throw new Error("Failed to fetch results");
+    const data = await res.json();
 
-    let insurableStatus =
-      data.riskCategory === "uninsurable" ? "❌ Uninsurable" : "✅ Insurable";
+    let insurableStatus = data.riskCategory === "uninsurable"
+      ? "❌ Uninsurable"
+      : "✅ Insurable";
 
     let bmiColor =
       data.bmiCategory.toLowerCase().includes("obese") ? "red" :
@@ -95,15 +94,15 @@ confirmBtn.addEventListener("click", async () => {
     summarySection.style.display = "none";
     resultDiv.style.display = "block";
 
+    // Start Over logic
     document.getElementById("startOverBtn").addEventListener("click", () => {
       form.reset();
-      resultDiv.style.display = "none";
       form.style.display = "block";
+      resultDiv.style.display = "none";
     });
 
   } catch (err) {
-    resultDiv.innerHTML = `<p style="color:red;">Error connecting to server.</p>`;
-    summarySection.style.display = "none";
+    resultDiv.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
     resultDiv.style.display = "block";
   }
 });
