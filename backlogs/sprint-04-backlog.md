@@ -28,7 +28,7 @@ Sprint 4 Backlog:
 | RC-008 | As a user, I want my inputs validated (e.g., height ≥ 2 feet) so that I can avoid mistakes and receive accurate results. | 7 | 4 | N | DONE | Adrian Salinas |
 | RC-011 | As a developer, I want to implement the risk calculation API using Node.js so that I can encapsulate the core business logic on the server side. | 7 | 6 | Y | DONE | Faiza Khan |
 | RC-012 | As a developer, I want to write at least one Node.js API and commit to GitHub so that I can contribute to server-side functionality and maintain traceable commits. (one story per team member) | 7 | 3 | Y | DONE | Faiza Khan |
-| RC-014 | As a Product Owner, I want to ensure that no calculations occur on the client so that I can maintain centralized and consistent calculation logic. | 7 | 1 | Y | -- | Salah Abdelmajid |
+| RC-014 | As a Product Owner, I want to ensure that no calculations occur on the client so that I can maintain centralized and consistent calculation logic. | 7 | 1 | Y | DONE | Salah Abdelmajid |
 | RC-015 | As a developer, I want to deploy the client as an Azure static website so that I can provide users with a fast and accessible frontend. | 5 | 3 | Y | DONE | Salah Abdelmajid |
 | RC-009 | As a user, I want to see a summary of my inputs before submitting so that I can confirm the information I entered is correct. | 5 | 3 | N | -- | Benjamin Campa |
-| RC-010 | As a client, I want to call a “ping” API to wake the servers on load, ensuring the backend is responsive when needed. | 5 | 2 | N | -- | Joesph Chavez |
+| RC-010 | As a client, I want to call a “ping” API to wake the servers on load, ensuring the backend is responsive when needed. | 5 | 2 | N | DONE | Joesph Chavez |
