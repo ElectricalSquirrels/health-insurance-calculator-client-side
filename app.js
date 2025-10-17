@@ -2,97 +2,50 @@ const API_BASE = window.location.hostname.includes('localhost')
   ? 'http://localhost:3000'
   : 'https://risk-calculator-api-d6dea9a7ehcxc2fw.canadacentral-01.azurewebsites.net';
 
-(async function pingServer() {
-  const pingUrl = `${API_BASE}/api/health`;
-  try {
-    const res = await fetch(pingUrl, { method: "GET" });
-    if (res.ok) console.log("✅ Server is awake and responsive");
-  } catch (err) {
-    console.error("❌ Failed to ping server:", err);
-  }
-})();
+const riskForm = document.getElementById("riskForm");
+const nextBtn = document.getElementById("nextBtn");
+const confirmBtn = document.getElementById("confirmBtn");
+const resultDiv = document.getElementById("result");
+const summarySection = document.getElementById("summarySection");
+const summaryList = document.getElementById("summaryList");
+const errorDiv = document.getElementById("errorMessage");
 
-document.getElementById("riskForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+// Helper for showing errors
+function showError(message, field) {
+  errorDiv.textContent = message;
+  if (field) {
+    field.classList.add("invalid");
+    field.focus();
+  }
+  return false;
+}
+
+// Validate all inputs
+function validateInputs() {
+  errorDiv.textContent = "";
+  document.querySelectorAll("input").forEach(i => i.classList.remove("invalid"));
 
   const age = Number(document.getElementById("age").value);
   const heightFt = Number(document.getElementById("heightFt").value);
   const heightIn = Number(document.getElementById("heightIn").value);
   const weight = Number(document.getElementById("weight").value);
-  const systolic = Number(document.getElementById("bpSys").value);
-  const diastolic = Number(document.getElementById("bpDia").value);
-  const familyHistoryInput = document.getElementById("familyHistory").value;
-  const familyHistory = familyHistoryInput
-    ? familyHistoryInput.split(",").map(c => c.trim())
-    : [];
+  const bpSys = Number(document.getElementById("bpSys").value);
+  const bpDia = Number(document.getElementById("bpDia").value);
 
-  const userData = {
-    age,
-    heightFt,
-    heightIn,
-    weight,
-    systolic,
-    diastolic,
-    familyHistory
-  };
+  if (!age || age < 1 || age > 120) return showError("⚠️ Age must be between 1 and 120.", document.getElementById("age"));
+  if (!heightFt || heightFt < 2 || heightFt > 8) return showError("⚠️ Height (feet) must be between 2 and 8.", document.getElementById("heightFt"));
+  if (heightIn < 0 || heightIn > 11) return showError("⚠️ Height (inches) must be between 0 and 11.", document.getElementById("heightIn"));
+  if (!weight || weight < 50 || weight > 700) return showError("⚠️ Weight must be between 50 and 700 lbs.", document.getElementById("weight"));
+  if (!bpSys || bpSys < 70 || bpSys > 250) return showError("⚠️ Systolic BP must be between 70 and 250.", document.getElementById("bpSys"));
+  if (!bpDia || bpDia < 40 || bpDia > 150) return showError("⚠️ Diastolic BP must be between 40 and 150.", document.getElementById("bpDia"));
 
-  try {
-    const response = await fetch(`${API_BASE}/api/calculate-risk`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(userData)
-    });
+  return true;
+}
 
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    const resultDiv = document.getElementById("result");
-
-    if (data.error) {
-      resultDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
-    } else {
-      let insurableStatus = data.riskCategory === "uninsurable"
-        ? "❌ Uninsurable"
-        : "✅ Insurable";
-
-      let bmiColor =
-        data.bmiCategory.toLowerCase().includes("obese") ? "red" :
-        data.bmiCategory.toLowerCase().includes("overweight") ? "orange" :
-        "green";
-
-      resultDiv.innerHTML = `
-        <h3>Results:</h3>
-        <p><strong>BMI:</strong> ${data.bmi} <span style="color:${bmiColor};">(${data.bmiCategory})</span></p>
-        <p><strong>Blood Pressure:</strong> ${data.bloodPressureCategory}</p>
-        <p><strong>Total Score:</strong> ${data.totalScore}</p>
-        <p><strong>Risk Category:</strong> ${data.riskCategory}</p>
-        <p><strong>Status:</strong> ${insurableStatus}</p>
-        <button id="startOverBtn">🔄 Start Over</button>
-      `;
-    }
-
-    resultDiv.style.display = "block";
-    document.getElementById("riskForm").style.display = "none";
-    document.getElementById("summarySection").style.display = "none";
-
-    document.getElementById("startOverBtn").addEventListener("click", () => {
-      document.getElementById("riskForm").reset();
-      resultDiv.style.display = "none";
-      document.getElementById("riskForm").style.display = "block";
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-
-  } catch (err) {
-    document.getElementById("result").innerHTML =
-      `<p style="color:red;">Error connecting to server: ${err.message}</p>`;
-  }
-});
-
-const nextBtn = document.getElementById("nextBtn");
-const summarySection = document.getElementById("summarySection");
-const summaryList = document.getElementById("summaryList");
-const confirmBtn = document.getElementById("confirmBtn");
-
+// Summary button
 nextBtn.addEventListener("click", () => {
+  if (!validateInputs()) return;
+
   const age = document.getElementById("age").value;
   const heightFt = document.getElementById("heightFt").value;
   const heightIn = document.getElementById("heightIn").value;
@@ -100,11 +53,6 @@ nextBtn.addEventListener("click", () => {
   const bpSys = document.getElementById("bpSys").value;
   const bpDia = document.getElementById("bpDia").value;
   const familyHistory = document.getElementById("familyHistory").value;
-
-  if (!age || !heightFt || !weight || !bpSys || !bpDia) {
-    alert("⚠️ Please fill out all required fields before continuing.");
-    return;
-  }
 
   summaryList.innerHTML = `
     <li><strong>Age:</strong> ${age}</li>
@@ -114,12 +62,57 @@ nextBtn.addEventListener("click", () => {
     <li><strong>Family History:</strong> ${familyHistory || "None"}</li>
   `;
 
+  riskForm.style.display = "none";
   summarySection.style.display = "block";
-  document.getElementById("riskForm").style.display = "none";
-  document.getElementById("result").style.display = "none";
 });
 
+// Confirm button
 confirmBtn.addEventListener("click", async () => {
-  summarySection.style.display = "none";
-  document.getElementById("riskForm").requestSubmit();
+  const age = Number(document.getElementById("age").value);
+  const heightFt = Number(document.getElementById("heightFt").value);
+  const heightIn = Number(document.getElementById("heightIn").value);
+  const weight = Number(document.getElementById("weight").value);
+  const systolic = Number(document.getElementById("bpSys").value);
+  const diastolic = Number(document.getElementById("bpDia").value);
+  const familyHistory = document.getElementById("familyHistory").value
+    ? document.getElementById("familyHistory").value.split(",").map(c => c.trim())
+    : [];
+
+  const userData = { age, heightFt, heightIn, weight, systolic, diastolic, familyHistory };
+
+  try {
+    const res = await fetch(`${API_BASE}/api/calculate-risk`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(userData)
+    });
+
+    const data = await res.json();
+
+    let color = data.bmiCategory.toLowerCase().includes("obese") ? "red" :
+                data.bmiCategory.toLowerCase().includes("overweight") ? "orange" : "green";
+
+    resultDiv.innerHTML = `
+      <h3>Results:</h3>
+      <p><strong>BMI:</strong> ${data.bmi} <span style="color:${color}">(${data.bmiCategory})</span></p>
+      <p><strong>Blood Pressure:</strong> ${data.bloodPressureCategory}</p>
+      <p><strong>Total Score:</strong> ${data.totalScore}</p>
+      <p><strong>Risk Category:</strong> ${data.riskCategory}</p>
+      <button id="startOverBtn">Start Over</button>
+    `;
+
+    summarySection.style.display = "none";
+    resultDiv.style.display = "block";
+
+    document.getElementById("startOverBtn").addEventListener("click", () => {
+      resultDiv.style.display = "none";
+      riskForm.reset();
+      riskForm.style.display = "block";
+      errorDiv.textContent = "";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+  } catch (err) {
+    resultDiv.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
+  }
 });

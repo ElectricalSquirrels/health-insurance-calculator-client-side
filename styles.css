@@ -27,15 +27,28 @@ body {
 h1 {
   text-align: center;
   font-size: 1.9rem;
-  margin-bottom: 1.8rem;
+  margin-bottom: 1rem;
   color: #1b5e20;
-  letter-spacing: 0.5px;
+}
+
+.instructions {
+  text-align: center;
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 1.5rem;
+}
+
+#errorMessage {
+  color: red;
+  text-align: center;
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 form {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1.2rem;
 }
 
 .form-group {
@@ -64,6 +77,11 @@ input:focus {
   background-color: #fff;
   outline: none;
   box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.15);
+}
+
+input.invalid {
+  border-color: red;
+  box-shadow: 0 0 5px rgba(255, 0, 0, 0.4);
 }
 
 button {
@@ -95,13 +113,6 @@ button:hover {
   font-weight: 600;
   text-align: center;
   display: none;
-  animation: fadeIn 0.5s ease;
-}
-
-small {
-  font-size: 0.8rem;
-  color: #666;
-  margin-top: 0.25rem;
 }
 
 #summarySection {
@@ -109,46 +120,19 @@ small {
   padding: 1.2rem;
   border-radius: 10px;
   margin-top: 1rem;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-  animation: fadeIn 0.5s ease;
-}
-
-#summarySection h3 {
-  color: #2e7d32;
-  margin-bottom: 0.8rem;
-  text-align: center;
 }
 
 #summaryList {
-  list-style-type: none;
-  padding-left: 0;
+  list-style: none;
+  padding: 0;
   line-height: 1.6;
-  font-size: 1rem;
 }
 
-#confirmBtn {
+#confirmBtn, #startOverBtn {
   background-color: #43a047;
   color: #fff;
   border: none;
   padding: 0.7rem 1.2rem;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 0.8rem;
-  display: block;
-  width: 100%;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
-}
-
-#confirmBtn:hover {
-  background-color: #2e7d32;
-}
-
-#startOverBtn {
-  background-color: #81c784;
-  color: #fff;
-  padding: 0.7rem 1.2rem;
-  border: none;
   border-radius: 8px;
   cursor: pointer;
   width: 100%;
@@ -157,25 +141,11 @@ small {
   transition: background-color 0.3s ease;
 }
 
-#startOverBtn:hover {
-  background-color: #388e3c;
+#confirmBtn:hover, #startOverBtn:hover {
+  background-color: #2e7d32;
 }
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@media (max-width: 480px) {
-  .container {
-    padding: 2rem 1.5rem;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  button {
-    font-size: 0.9rem;
-  }
 }
