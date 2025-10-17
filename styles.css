@@ -1,3 +1,4 @@
+/* Global Reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -14,6 +15,7 @@ body {
   color: #333;
 }
 
+/* Container */
 .container {
   background-color: #ffffff;
   padding: 3rem 2.5rem;
@@ -24,6 +26,7 @@ body {
   animation: fadeIn 0.6s ease;
 }
 
+/* Headings */
 h1 {
   text-align: center;
   font-size: 1.9rem;
@@ -32,6 +35,13 @@ h1 {
   letter-spacing: 0.5px;
 }
 
+h3 {
+  color: #1b5e20;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* Form Styling */
 form {
   display: flex;
   flex-direction: column;
@@ -66,6 +76,7 @@ input:focus {
   box-shadow: 0 0 0 3px rgba(67, 160, 71, 0.15);
 }
 
+/* Buttons */
 button {
   background: linear-gradient(90deg, #43a047, #66bb6a);
   color: white;
@@ -85,6 +96,7 @@ button:hover {
   box-shadow: 0 6px 12px rgba(56, 142, 60, 0.25);
 }
 
+/* Results Section */
 #result {
   margin-top: 1.8rem;
   padding: 1.2rem;
@@ -95,16 +107,30 @@ button:hover {
   font-weight: 600;
   text-align: center;
   display: none;
-  animation: fadeIn 0.5s ease;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
+#result.show {
+  opacity: 1;
+}
+
+#result p {
+  margin-bottom: 0.6rem;
+}
+
+#result strong {
+  color: #2e7d32;
+}
+
+/* Family History Note */
 small {
   font-size: 0.8rem;
   color: #666;
   margin-top: 0.25rem;
 }
 
-/*  Summary Section  */
+/* Summary Section */
 #summarySection {
   background-color: #f1f8e9;
   padding: 1.2rem;
@@ -125,6 +151,7 @@ small {
   padding-left: 0;
   line-height: 1.6;
   font-size: 1rem;
+  margin-bottom: 1rem;
 }
 
 #confirmBtn {
@@ -134,8 +161,6 @@ small {
   padding: 0.7rem 1.2rem;
   border-radius: 8px;
   cursor: pointer;
-  margin-top: 0.8rem;
-  display: block;
   width: 100%;
   font-weight: 600;
   transition: background-color 0.3s ease;
@@ -145,7 +170,25 @@ small {
   background-color: #2e7d32;
 }
 
-/*  Animation  */
+/* Start Over Button */
+#startOverBtn {
+  background-color: #81c784;
+  color: #fff;
+  padding: 0.7rem 1.2rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+#startOverBtn:hover {
+  background-color: #388e3c;
+}
+
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -157,7 +200,7 @@ small {
   }
 }
 
-/*  Responsive Design  */
+/* Responsive Design */
 @media (max-width: 480px) {
   .container {
     padding: 2rem 1.5rem;

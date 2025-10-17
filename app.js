@@ -4,7 +4,7 @@ const API_BASE = window.location.hostname.includes('localhost')
   : 'https://risk-calculator-api-d6dea9a7ehcxc2fw.canadacentral-01.azurewebsites.net';
 
 
-// Health ping to check if server is awake
+
 (async function pingServer() {
   const pingUrl = `${API_BASE}/api/health`;
   const start = performance.now();
@@ -80,7 +80,21 @@ document.getElementById("riskForm").addEventListener("submit", async (e) => {
         <p><strong>Total Score:</strong> ${data.totalScore}</p>
         <p><strong>Risk Category:</strong> ${data.riskCategory}</p>
         <p><strong>Status:</strong> ${insurableStatus}</p>
+        <button id="startOverBtn">🔄 Start Over</button>
       `;
+
+      //  Show result 
+      resultDiv.style.display = "block";
+      resultDiv.classList.add("show");
+
+      //  Start Over button 
+      document.getElementById("startOverBtn").addEventListener("click", () => {
+        document.getElementById("riskForm").reset();
+        resultDiv.style.display = "none";
+        summarySection.style.display = "none";
+        document.getElementById("riskForm").style.display = "block";
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
     }
   } catch (err) {
     document.getElementById("result").innerHTML =
@@ -122,8 +136,10 @@ nextBtn.addEventListener("click", () => {
   document.getElementById("result").style.display = "none";
 });
 
+//  Confirm & Calculate button 
 confirmBtn.addEventListener("click", async () => {
-  summarySection.style.display = "none";
-  document.getElementById("riskForm").style.display = "block";
-  document.getElementById("riskForm").requestSubmit();
+  summarySection.style.display = "none";          
+  document.getElementById("riskForm").style.display = "none"; 
+  document.getElementById("result").style.display = "block";  
+  document.getElementById("riskForm").requestSubmit();        
 });
