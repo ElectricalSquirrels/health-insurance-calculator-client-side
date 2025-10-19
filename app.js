@@ -9,6 +9,8 @@ const resultDiv = document.getElementById("result");
 const summarySection = document.getElementById("summarySection");
 const summaryList = document.getElementById("summaryList");
 const errorDiv = document.getElementById("errorMessage");
+const welcomeMsg = document.getElementById("welcomeMsg");
+if (welcomeMsg) welcomeMsg.style.display = "block";
 
 // Helper for showing errors
 function showError(message, field) {
@@ -19,6 +21,7 @@ function showError(message, field) {
   }
   return false;
 }
+
 
 // Validate all inputs
 function validateInputs() {
@@ -45,6 +48,7 @@ function validateInputs() {
 // Summary button
 nextBtn.addEventListener("click", () => {
   if (!validateInputs()) return;
+  if (welcomeMsg) welcomeMsg.style.display = "none";
 
   const age = document.getElementById("age").value;
   const heightFt = document.getElementById("heightFt").value;
@@ -107,6 +111,9 @@ confirmBtn.addEventListener("click", async () => {
     document.getElementById("startOverBtn").addEventListener("click", () => {
       resultDiv.style.display = "none";
       riskForm.reset();
+      // Reset views to initial state
+      summarySection.style.display = "none";
+      if (welcomeMsg) welcomeMsg.style.display = "block";
       riskForm.style.display = "block";
       errorDiv.textContent = "";
       window.scrollTo({ top: 0, behavior: "smooth" });

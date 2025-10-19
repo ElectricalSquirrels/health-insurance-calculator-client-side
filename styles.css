@@ -128,6 +128,8 @@ button:hover {
   line-height: 1.6;
 }
 
+/* .hidden { display: none !important; } */
+
 #confirmBtn, #startOverBtn {
   background-color: #43a047;
   color: #fff;
